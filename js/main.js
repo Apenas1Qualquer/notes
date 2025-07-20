@@ -73,7 +73,7 @@ function deleteNote(id, note) {
         notesContainer.style.display = "none"
     }
     const data = JSON.parse(localStorage.getItem("notes")) || []
-    const newData = data.filter(item => item.description != note)
+    const newData = data.filter(item => item.description != note.description)
     localStorage.setItem("notes", JSON.stringify(newData))
 }
 
