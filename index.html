@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notas</title>
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+    <main >
+        <div class="container">
+            <section>
+                <h1>Notas</h1>
+            </section>
+
+            <section>
+               <form onsubmit="newNote(event)">
+                    <input type="text" name="note" id="note" placeholder="Escreva sua nota aqui" autocomplete="off" required>
+                    <button type="submit">Enviar</button>
+               </form> 
+            </section>
+
+            <section>
+                <div class="notes" id="notes"></div>
+            </section>
+        </div>
+    </main>
+    <script src="./js/main.js"></script>
+</body>
+</html>
