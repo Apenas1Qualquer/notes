@@ -12,11 +12,14 @@ function newNote(e) {
     e.preventDefault()
     
     const form = new FormData(e.target)
-    const note = form.get("note")
+    const note = {
+        finished: false,
+        description: form.get("note")
+    }
     
     const data = JSON.parse(localStorage.getItem("notes")) || []
 
-    if (data.map(item => item.toUpperCase().replaceAll(" ", "")).includes(note.toUpperCase().replaceAll(" ", ""))) {
+    if (data.map(item => item.description.toUpperCase().replaceAll(" ", "")).includes(note.description.toUpperCase().replaceAll(" ", ""))) {
         e.target.children[0].value = "" 
         return
     }
@@ -37,10 +40,12 @@ function generateNotes(notes) {
         const input = document.createElement("input")
         input.type = "checkbox"
         input.id = contador
-        
+        input.checked = note.finished
+        input.onclick = () => changeStatus(note)
+
         const label = document.createElement("label")
         label.htmlFor = contador
-        label.textContent = note
+        label.textContent = note.description
         
         const divId = `note-${contador}`
 
@@ -68,6 +73,22 @@ function deleteNote(id, note) {
         notesContainer.style.display = "none"
     }
     const data = JSON.parse(localStorage.getItem("notes")) || []
-    const newData = data.filter(item => item != note)
+    const newData = data.filter(item => item.description != note)
     localStorage.setItem("notes", JSON.stringify(newData))
 }
+
+function changeStatus(note) {
+    const data = JSON.parse(localStorage.getItem("notes")) || []
+    const newData = []
+    for (let dataNote of data) {
+        if (dataNote.description == note.description) {
+            newData.push({
+                finished: !dataNote.finished,
+                description: dataNote.description 
+            })
+        } else {
+            newData.push(dataNote)
+        }
+    }
+    localStorage.setItem("notes", JSON.stringify(newData))
+} 
